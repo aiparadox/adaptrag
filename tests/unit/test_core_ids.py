@@ -1,4 +1,5 @@
 from adaptrag.core.ids import (
+    chunk_id,
     document_id,
     element_id,
     logical_id,
@@ -44,3 +45,13 @@ def test_id_prefixes():
     assert logical_id("t", "s").startswith("lg_")
     assert document_id("lg_x", "h").startswith("doc_")
     assert element_id("doc_x", "fp", 0).startswith("el_")
+
+
+def test_chunk_id_is_deterministic_and_order_sensitive():
+    assert chunk_id("fp", ["a", "b"]) == chunk_id("fp", ["a", "b"])
+    assert chunk_id("fp", ["a", "b"]) != chunk_id("fp", ["b", "a"])
+    assert chunk_id("fp", ["a"]) != chunk_id("fp2", ["a"])
+
+
+def test_chunk_id_prefix():
+    assert chunk_id("fp", ["a"]).startswith("ch_")

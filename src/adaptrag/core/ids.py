@@ -5,6 +5,7 @@ unchanged file a no-op and keeps old citations resolvable.
 """
 
 import hashlib
+from collections.abc import Sequence
 from pathlib import Path
 
 _SEP = b"\x1f"
@@ -64,3 +65,12 @@ def element_id(document: str, extractor_fingerprint: str, ordinal: int) -> str:
     element's position, so two extractors on the same file never collide.
     """
     return _make_id("el", document, extractor_fingerprint, str(ordinal))
+
+
+def chunk_id(chunker_fingerprint: str, element_ids: Sequence[str]) -> str:
+    """Return the ID of one chunk.
+
+    It is built from the chunker fingerprint and the ordered element IDs, so the
+    same elements chunked the same way always give the same chunk ID.
+    """
+    return _make_id("ch", chunker_fingerprint, *element_ids)
