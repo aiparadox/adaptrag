@@ -1,0 +1,1 @@
+"""Composition root: the only module that imports adapters."""

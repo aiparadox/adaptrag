@@ -20,3 +20,16 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+
+[tool.ruff]
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+extend-select = ["I", "UP", "B", "SIM", "D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D"]
